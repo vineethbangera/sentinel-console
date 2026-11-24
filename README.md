@@ -19,7 +19,7 @@ Add `?demo=empty` to the URL to see the Alerts page with no alerts.
 
 ## Why GitHub Packages needs a token
 
-npmjs.com lets anyone download a public package anonymously. GitHub Packages doesn't: every install request has to be signed in, whether the package is public or private. GitHub uses that to apply rate limits and access rules per account, and to serve public and private packages from the same registry with the same rules. So any machine that installs Bastion, including CI and Dependabot, needs a GitHub token with permission to read packages.
+npmjs.com lets anyone download a public package anonymously. GitHub Packages' npm registry doesn't: every request has to be signed in with a token that can read packages, whether the package is public or private. "Public" there means any GitHub account may read it, not that no account is needed. One registry serves public and private packages under the same rules, and every download is tied to an account. So any machine that installs Bastion, including CI and Dependabot, needs a GitHub token with `read:packages`.
 
 ## Bastion upgrades
 
