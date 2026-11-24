@@ -105,7 +105,7 @@ body {
   font-weight: 600;
 }
 
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .topbar,
   .page {
     padding-left: 16px;
