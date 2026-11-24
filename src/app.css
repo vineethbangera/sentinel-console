@@ -34,7 +34,9 @@ body {
 }
 
 .topbar nav {
+  display: flex;
   flex: 1;
+  gap: 16px;
 }
 
 .topbar nav a {
@@ -64,6 +66,17 @@ body {
 
 .page-header p {
   margin: 2px 0 0;
+}
+
+/* Title block with a rule underneath, as in the Firewall rules design. */
+.page-header-divided {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.firewall-search {
+  width: 250px;
+  max-width: 100%;
 }
 
 .muted {

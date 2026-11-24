@@ -3,6 +3,18 @@ import { Button } from "@vineethbangera/ui"
 import { dark, light } from "@vineethbangera/tokens"
 
 import { AlertsPage } from "./alerts/alerts-page"
+import { FirewallRulesPage } from "./firewall/firewall-rules-page"
+
+// Two pages, chosen by path. Plain links reload the page; a router isn't
+// worth adding until there are more pages or shared state between them.
+const pages = [
+  { path: "/", label: "Alerts", title: "Alerts" },
+  { path: "/firewall-rules", label: "Firewall rules", title: "Firewall rules" },
+] as const
+
+const currentPath = pages.some((page) => page.path === window.location.pathname)
+  ? window.location.pathname
+  : "/"
 
 type Theme = "light" | "dark"
 
@@ -24,12 +36,25 @@ export function App() {
     meta.content = (theme === "dark" ? dark : light).background
   }, [theme])
 
+  useEffect(() => {
+    const page = pages.find((p) => p.path === currentPath)
+    document.title = `${page?.title ?? "Alerts"} · Sentinel`
+  }, [])
+
   return (
     <>
       <header className="topbar">
         <span className="brand">Sentinel</span>
         <nav aria-label="Main">
-          <a href="/" aria-current="page">Alerts</a>
+          {pages.map((page) => (
+            <a
+              key={page.path}
+              href={page.path}
+              aria-current={page.path === currentPath ? "page" : undefined}
+            >
+              {page.label}
+            </a>
+          ))}
         </nav>
         <Button
           variant="ghost"
@@ -40,7 +65,11 @@ export function App() {
         </Button>
       </header>
       <main>
-        <AlertsPage data={emptyDemo ? [] : undefined} />
+        {currentPath === "/firewall-rules" ? (
+          <FirewallRulesPage />
+        ) : (
+          <AlertsPage data={emptyDemo ? [] : undefined} />
+        )}
       </main>
     </>
   )
